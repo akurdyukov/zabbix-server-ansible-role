@@ -10,4 +10,8 @@ galaxy_info:
   categories:
    - monitoring
 dependencies:
-  - mysql-server
+  - role: 'mysql-server'
+    when: zabbix_database == 'mysql'
+
+  - role: postgresql
+    when: zabbix_database == 'pgsql'

@@ -1,5 +1,4 @@
 ---
-
 - name: Install sendEmail program
   apt: name=sendemail state=present
   tags:
@@ -11,5 +10,3 @@
   tags:
     - zabbix-server
     - email
-  when: zabbix_server_email
-  

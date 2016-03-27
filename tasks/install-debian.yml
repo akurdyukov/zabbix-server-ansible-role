@@ -1,0 +1,5 @@
+---
+- name: Install package
+  apt: name={{ zabbix_server_package }} state=present
+  tags:
+    - zabbix-server

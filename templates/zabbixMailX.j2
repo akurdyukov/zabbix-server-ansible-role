@@ -1,0 +1,14 @@
+#!/bin/sh
+
+TO_ADDRESS="$1"
+SUBJECT="$2"
+BODY="$3"
+
+echo "${BODY}" | /bin/mailx \
+-r "{{ zabbix_server_email_address }}" \
+-s "${SUBJECT}" \
+-S smtp="{{ zabbix_server_email_host }}:{{ zabbix_server_email_port }}" \
+-S smtp-auth=login \
+-S smtp-auth-user="{{ zabbix_server_email_username }}" \
+-S smtp-auth-password="{{ zabbix_server_email_password }}" \
+"${TO_ADDRESS}"

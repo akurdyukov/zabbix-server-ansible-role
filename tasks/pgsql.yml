@@ -1,0 +1,15 @@
+---
+- name: Check database already populated
+  become: true
+  become_user: postgres
+  shell: 'psql -h {{ zabbix_database_host }} -p {{ zabbix_database_port }} -U {{ zabbix_database_username }} -c "{{ pgsql_check_database_query }}" -t -A {{ zabbix_database_name }}'
+  register: check_result
+
+- name: Populate PostgeSQL database
+  become: yes
+  become_user: postgres
+  shell: "zcat /usr/share/doc/zabbix-server-pgsql-3.0.1/create.sql.gz | psql -h {{ zabbix_database_host }} -p {{ zabbix_database_port }} -U {{ zabbix_database_username }} {{ zabbix_database_name }}"
+  when: check_result.stdout == 'f'
+  tags:
+    - zabbix-server
+    - pgsql
